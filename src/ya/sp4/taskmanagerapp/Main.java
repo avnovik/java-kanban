@@ -102,5 +102,10 @@ public class Main {
         for (Subtask task: subtaskListByEpicId) {
             System.out.println(task);
         }
+
+        System.out.println("------------------------------------");
+        System.out.println("2b. Удаление всех задач.");
+        manager.deleteAllSubtasks();
+        manager.deleteAllEpics();
     }
 }

@@ -36,16 +36,21 @@ public class TaskManager {
     public void deleteAllTasks() {
         System.out.println("Удаляем все [TASK]");
         tasks.clear();
-        System.out.println("Список задач пуст");
+
     }
 
     public void deleteAllSubtasks() {
         System.out.println("Удаляем все [SUBTASK]");
         subtasks.clear();
+        for (Epic epic: epics.values()) {
+            epic.removeAllSubtask();
+            updateEpicStatus(epic.getId());
+        }
     }
 
     public void deleteAllEpics() {
         System.out.println("Удаляем все [EPIC]");
+        subtasks.clear();
         epics.clear();
     }
     /**
@@ -83,10 +88,9 @@ public class TaskManager {
         subtasks.put(newId, subtask);
 
         Epic epic = epics.get(subtask.getEpicId());
-        if (epic != null) {
-            epic.addSubtaskId(newId);
-            updateEpicStatus(epic.getId());
-        }
+        epic.addSubtaskId(newId);
+        updateEpicStatus(epic.getId());
+
         return newId;
     }
 
