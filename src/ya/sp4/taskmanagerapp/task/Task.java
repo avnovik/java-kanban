@@ -3,10 +3,10 @@ package ya.sp4.taskmanagerapp.task;
 import java.util.Objects;
 
 public class Task {
-    private int id;
-    private String title;
-    private String description;
-    private TaskStatus status;
+    protected int id;
+    protected String title;
+    protected String description;
+    protected TaskStatus status;
 
     public Task(int id, String tittle, String description, TaskStatus status) {
         this.id = id;

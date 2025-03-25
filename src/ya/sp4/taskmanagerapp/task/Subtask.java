@@ -1,7 +1,7 @@
 package ya.sp4.taskmanagerapp.task;
 
 public class Subtask extends Task{
-    private int epicId;
+    private final int epicId;
 
     public Subtask(int id, String tittle, String description, TaskStatus status, int epicId) {
         super(id, tittle, description, status);
@@ -12,7 +12,14 @@ public class Subtask extends Task{
         return epicId;
     }
 
-    public void setEpicId(int epicId) {
-        this.epicId = epicId;
+    @Override
+    public String toString() {
+        return "Subtask{" +
+                "epicId=" + epicId +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

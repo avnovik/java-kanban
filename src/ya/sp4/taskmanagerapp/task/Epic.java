@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task {
-    private List<Integer> subtaskIds;
+    private final List<Integer> subtaskIds;
 
     public Epic(int id, String tittle, String description) {
         super(id, tittle, description, TaskStatus.NEW);
@@ -21,5 +21,16 @@ public class Epic extends Task {
 
     public void removeSubtaskId(int subtaskId) {
         subtaskIds.remove((Integer) subtaskId);
+    }
+
+    @Override
+    public String toString() {
+        return "Epic{" +
+                "subtaskIds=" + subtaskIds +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
