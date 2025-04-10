@@ -1,4 +1,4 @@
-package ya.sp4.taskmanagerapp.task;
+package ya.hw.taskmanagerapp.task;
 
 import java.util.Objects;
 

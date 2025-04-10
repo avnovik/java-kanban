@@ -1,16 +1,17 @@
-package ya.sp4.taskmanagerapp;
+package ya.hw.taskmanagerapp;
 
-import ya.sp4.taskmanagerapp.manager.TaskManager;
-import ya.sp4.taskmanagerapp.task.Epic;
-import ya.sp4.taskmanagerapp.task.Subtask;
-import ya.sp4.taskmanagerapp.task.Task;
-import ya.sp4.taskmanagerapp.task.TaskStatus;
+import ya.hw.taskmanagerapp.manager.Managers;
+import ya.hw.taskmanagerapp.manager.TaskManager;
+import ya.hw.taskmanagerapp.task.Epic;
+import ya.hw.taskmanagerapp.task.Subtask;
+import ya.hw.taskmanagerapp.task.Task;
+import ya.hw.taskmanagerapp.task.TaskStatus;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        TaskManager manager = Managers.getDefault();
 
         System.out.println("2.d. Создание.");
         Task task1 = new Task(22, "Тест", "Тест создания", TaskStatus.NEW);
@@ -46,10 +47,13 @@ public class Main {
         System.out.println(manager.getTask(idTask1));
         System.out.println(manager.getTask(idTask2));
         System.out.println(manager.getTask(idTask3));
+        List<Task> history = manager.getHistory();
+        System.out.println("История getHistory: " + manager.getHistory().size());
         System.out.println("------------------------------------");
         System.out.println("Эпики:");
         System.out.println(manager.getEpic(idEpicTask1));
         System.out.println(manager.getEpic(idEpicTask2));
+        System.out.println("История getHistory: " + manager.getHistory().size());
         System.out.println("------------------------------------");
         System.out.println("Подзадачи:");
         System.out.println(manager.getSubtask(subtaskId1));
@@ -58,6 +62,7 @@ public class Main {
         System.out.println(manager.getSubtask(subtaskId2_1));
         System.out.println(manager.getSubtask(subtaskId2_2));
         System.out.println(manager.getSubtask(subtaskId2_3));
+        System.out.println("История getHistory: " + manager.getHistory().size());
         System.out.println("------------------------------------");
 
         System.out.println("2.e. Обновление.");
@@ -78,7 +83,7 @@ public class Main {
         Subtask updateSubtask = new Subtask(subtaskId2,"ПодТест2 updateSubtask", "ПодТест создания updateSubtask", TaskStatus.IN_PROGRESS, idEpicTask1);
         manager.updateSubtask(updateSubtask);
         System.out.println("После " + manager.getSubtask(subtaskId2));
-
+        System.out.println("История getHistory: " + manager.getHistory().size());
         System.out.println("2.a. Получение списка всех задач.");
         System.out.println("### Задачи:");
         List<Task> taskList = manager.getAllTasks();
@@ -95,6 +100,8 @@ public class Main {
         for (Subtask task: subtaskList) {
             System.out.println(task);
         }
+
+
         System.out.println("2.f. Удаление по идентификатору.");
         manager.deleteSubtask(subtask2_3.getId());
         System.out.println("3.a. Получение списка всех подзадач определённого эпика.");
