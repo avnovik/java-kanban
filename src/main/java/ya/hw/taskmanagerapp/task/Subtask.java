@@ -1,6 +1,6 @@
 package ya.hw.taskmanagerapp.task;
 
-public class Subtask extends Task{
+public class Subtask extends Task {
     private int epicId;
 
     public Subtask(int id, String tittle, String description, TaskStatus status, int epicId) {
