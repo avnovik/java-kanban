@@ -1,4 +1,4 @@
-package ya.sp4.taskmanagerapp.task;
+package main.ya.hw.taskmanagerapp.task;
 
 import java.util.ArrayList;
 import java.util.List;
