@@ -5,16 +5,16 @@ import main.ya.hw.taskmanagerapp.task.Subtask;
 import main.ya.hw.taskmanagerapp.task.Task;
 import main.ya.hw.taskmanagerapp.task.TaskStatus;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
     private int idCounter = 0;
+
+    private final LinkedList<Task> history = new LinkedList<>();
+    private static final int MAX_HISTORY_SIZE = 10;
 
     @Override
     public List<Task> getAllTasks() {return new ArrayList<>(tasks.values());}
@@ -51,15 +51,28 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTask(int id) {
-        return tasks.get(id);
+        Task task = tasks.get(id);
+        if (task != null) {
+            addToHistory(task);
+        }
+        return task;
     }
+
     @Override
     public Subtask getSubtask(int id) {
-        return subtasks.get(id);
+        Subtask subtask = subtasks.get(id);
+        if (subtask != null) {
+            addToHistory(subtask);
+        }
+        return subtask;
     }
     @Override
     public Epic getEpic(int id) {
-        return epics.get(id);
+        Epic epic = epics.get(id);
+        if (epic != null) {
+            addToHistory(epic);
+        }
+        return epic;
     }
 
     @Override
@@ -158,6 +171,18 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
         return subtasksList;
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return new ArrayList<>(history);
+    }
+
+    private void addToHistory(Task task) {
+        history.addLast(task);
+        if (history.size() > MAX_HISTORY_SIZE) {
+            history.removeFirst();
+        }
     }
 
     private void updateEpicStatus(int epicId) {

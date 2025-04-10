@@ -48,4 +48,8 @@ public interface TaskManager {
      *  3a. Получение списка всех подзадач определённого эпика.
      */
     List<Subtask> getSubtasksByEpicId(int epicId);
+    /**
+     *  sp5. Показывает последние просмотренные пользователем задачи.
+     */
+    List<Task> getHistory();
 }
