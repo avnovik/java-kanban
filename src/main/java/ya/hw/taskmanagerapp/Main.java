@@ -1,16 +1,17 @@
-package main.ya.hw.taskmanagerapp;
+package ya.hw.taskmanagerapp;
 
-import main.ya.hw.taskmanagerapp.manager.InMemoryTaskManager;
-import main.ya.hw.taskmanagerapp.task.Epic;
-import main.ya.hw.taskmanagerapp.task.Subtask;
-import main.ya.hw.taskmanagerapp.task.Task;
-import main.ya.hw.taskmanagerapp.task.TaskStatus;
+import ya.hw.taskmanagerapp.manager.Managers;
+import ya.hw.taskmanagerapp.manager.TaskManager;
+import ya.hw.taskmanagerapp.task.Epic;
+import ya.hw.taskmanagerapp.task.Subtask;
+import ya.hw.taskmanagerapp.task.Task;
+import ya.hw.taskmanagerapp.task.TaskStatus;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        InMemoryTaskManager manager = new InMemoryTaskManager();
+        TaskManager manager = Managers.getDefault();
 
         System.out.println("2.d. Создание.");
         Task task1 = new Task(22, "Тест", "Тест создания", TaskStatus.NEW);

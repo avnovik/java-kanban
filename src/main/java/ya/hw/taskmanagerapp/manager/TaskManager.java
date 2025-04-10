@@ -1,9 +1,8 @@
-package main.ya.hw.taskmanagerapp.manager;
+package ya.hw.taskmanagerapp.manager;
 
-import main.ya.hw.taskmanagerapp.task.Epic;
-import main.ya.hw.taskmanagerapp.task.Subtask;
-import main.ya.hw.taskmanagerapp.task.Task;
-import main.ya.hw.taskmanagerapp.task.TaskStatus;
+import ya.hw.taskmanagerapp.task.Epic;
+import ya.hw.taskmanagerapp.task.Subtask;
+import ya.hw.taskmanagerapp.task.Task;
 
 import java.util.List;
 
