@@ -12,7 +12,11 @@ public class Subtask extends Task {
         return epicId;
     }
 
-    public void setEpicId(int epicId) {
+    public void setEpicId(int epicId, boolean force) {
+        if (!force) {
+            throw new UnsupportedOperationException(
+                    "Для изменения epicId используйте updateSubtask в TaskManager");
+        }
         this.epicId = epicId;
     }
 
