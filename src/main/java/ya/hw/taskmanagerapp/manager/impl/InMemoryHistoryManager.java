@@ -3,26 +3,24 @@ package ya.hw.taskmanagerapp.manager.impl;
 import ya.hw.taskmanagerapp.manager.HistoryManager;
 import ya.hw.taskmanagerapp.task.Task;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final LinkedList<Task> history = new LinkedList<>();
-    private static final int MAX_HISTORY_SIZE = 10;
+    private final LinkedHashMap<Integer, Task> historyMap = new LinkedHashMap<>();
 
     @Override
     public void add(Task task) {
         if (task == null) return;
+        historyMap.put(task.getId(), task);
+    }
 
-        history.addLast(task);
-        if (history.size() > MAX_HISTORY_SIZE) {
-            history.removeFirst();
-        }
+    @Override
+    public void remove(int id) {
+        historyMap.remove(id);
     }
 
     @Override
     public List<Task> getHistory() {
-        return new ArrayList<>(history);
+        return new ArrayList<>(historyMap.values());
     }
 }
