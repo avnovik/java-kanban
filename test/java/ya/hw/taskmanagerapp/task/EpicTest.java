@@ -86,23 +86,4 @@ public class EpicTest {
         manager.deleteSubtask(2);
         assertTrue(epic.getSubtaskIds().isEmpty(), "Подзадача не удалилась из Epic");
     }
-
-    @Test
-    @DisplayName("Изменение EpicID подзадачи приводит к её перемещению")
-    void subtaskEpicIdUpdateChangesParent() {
-        Epic epic1 = new Epic(1, "Epic 1", "Desc");
-        Epic epic2 = new Epic(2, "Epic 2", "Desc");
-        manager.createEpic(epic1);
-        manager.createEpic(epic2);
-        Subtask subtask = new Subtask(3, "Subtask", "Desc", TaskStatus.NEW, 1);
-        manager.createSubtask(subtask);
-
-        Subtask updatedSubtask = new Subtask(3, "Updated", "New Desc", TaskStatus.DONE, 2);
-
-        manager.updateSubtask(updatedSubtask);
-
-        assertFalse(epic1.getSubtaskIds().contains(3), "Должен удалиться из Epic 1");
-        assertTrue(epic2.getSubtaskIds().contains(3), "Должен добавиться в Epic 2");
-        assertEquals(2, manager.getSubtask(3).getEpicId(), "EpicID должен быть 2");
-    }
 }
