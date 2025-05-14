@@ -1,12 +1,12 @@
 package ya.hw.taskmanagerapp.manager.impl;
 
+import main.ya.hw.taskmanagerapp.manager.HistoryManager;
+import main.ya.hw.taskmanagerapp.manager.Managers;
+import main.ya.hw.taskmanagerapp.task.Task;
+import main.ya.hw.taskmanagerapp.task.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ya.hw.taskmanagerapp.manager.HistoryManager;
-import ya.hw.taskmanagerapp.manager.Managers;
-import ya.hw.taskmanagerapp.task.Task;
-import ya.hw.taskmanagerapp.task.TaskStatus;
 
 import java.util.List;
 

@@ -1,11 +1,12 @@
-package ya.hw.taskmanagerapp.manager;
+package main.ya.hw.taskmanagerapp.manager;
 
-import ya.hw.taskmanagerapp.task.Epic;
-import ya.hw.taskmanagerapp.task.Subtask;
-import ya.hw.taskmanagerapp.task.Task;
+import main.ya.hw.taskmanagerapp.task.*;
 
 import java.util.List;
 
+/**
+ * Управление задачами, эпиками и подзадачами.
+ */
 public interface TaskManager {
     /**
      * 2a. Получение списка всех задач.

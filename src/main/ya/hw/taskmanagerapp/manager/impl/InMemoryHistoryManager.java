@@ -1,10 +1,17 @@
-package ya.hw.taskmanagerapp.manager.impl;
+package main.ya.hw.taskmanagerapp.manager.impl;
 
-import ya.hw.taskmanagerapp.manager.HistoryManager;
-import ya.hw.taskmanagerapp.task.Task;
+import main.ya.hw.taskmanagerapp.manager.HistoryManager;
+import main.ya.hw.taskmanagerapp.task.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * Реализация HistoryManager с хранением истории в памяти.
+ * Использует двусвязный список для быстрого удаления из середины.
+ */
 public class InMemoryHistoryManager implements HistoryManager {
 
     private final Map<Integer, Node> nodeMap = new HashMap<>();

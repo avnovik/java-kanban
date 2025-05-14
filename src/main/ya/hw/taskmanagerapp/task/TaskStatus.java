@@ -1,4 +1,4 @@
-package ya.hw.taskmanagerapp.task;
+package main.ya.hw.taskmanagerapp.task;
 
 public enum TaskStatus {
     NEW,

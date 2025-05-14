@@ -1,5 +1,7 @@
 package ya.hw.taskmanagerapp.task;
 
+import main.ya.hw.taskmanagerapp.task.Subtask;
+import main.ya.hw.taskmanagerapp.task.TaskStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

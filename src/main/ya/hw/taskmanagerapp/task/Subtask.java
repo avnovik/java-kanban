@@ -1,4 +1,4 @@
-package ya.hw.taskmanagerapp.task;
+package main.ya.hw.taskmanagerapp.task;
 
 public class Subtask extends Task {
     private final int epicId;
@@ -10,6 +10,11 @@ public class Subtask extends Task {
 
     public int getEpicId() {
         return epicId;
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
     }
 
     @Override

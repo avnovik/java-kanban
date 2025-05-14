@@ -1,4 +1,4 @@
-package ya.hw.taskmanagerapp.task;
+package main.ya.hw.taskmanagerapp.task;
 
 import java.util.Objects;
 
@@ -45,6 +45,10 @@ public class Task {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public TaskType getType() {
+        return TaskType.TASK;
     }
 
     @Override

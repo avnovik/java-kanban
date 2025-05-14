@@ -1,4 +1,4 @@
-package ya.hw.taskmanagerapp.task;
+package main.ya.hw.taskmanagerapp.task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,11 @@ public class Epic extends Task {
 
     public void removeAllSubtask() {
         subtaskIds.clear();
+    }
+
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
     }
 
     @Override
