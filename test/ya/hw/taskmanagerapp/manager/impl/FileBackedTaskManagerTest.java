@@ -21,7 +21,7 @@ public class FileBackedTaskManagerTest {
     void shouldSaveAndLoadEmptyManager() {
         try {
             File tmpFile = createTempFile("shouldSaveAndLoadEmptyManager_", ".csv",
-                    new File("src/main/resources/"));
+                    new File("test/resources/"));
             TaskManager loaded = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
 
             tmpFile.deleteOnExit();
@@ -37,7 +37,7 @@ public class FileBackedTaskManagerTest {
     void shouldSaveAndLoadTasks() {
         try {
             File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv",
-                    new File("src/main/resources/"));
+                    new File("test/resources/"));
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
 
             manager.createTask(new Task(1, "Task", "SomeTask", TaskStatus.NEW));
@@ -56,7 +56,7 @@ public class FileBackedTaskManagerTest {
     void shouldSaveAndLoadSomeTasks() {
         try {
             File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv",
-                    new File("src/main/resources/"));
+                    new File("test/resources/"));
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
             Task task1 = new Task(1, "Помыть посуду", "Срочно!", TaskStatus.NEW);
             Task task2 = new Task(2, "Купить продукты", "Молоко, хлеб", TaskStatus.NEW);
@@ -95,7 +95,7 @@ public class FileBackedTaskManagerTest {
                     "5,EPIC,Epic 1,DONE,Description 2,\n" +
                     "10,SUBTASK,Subtask 1,IN_PROGRESS,Description 3,5";
             File tmpFile = createTempFile("shouldRestoreIdCounterAsMaxIdPlusOne_", ".csv",
-                    new File("src/main/resources/"));
+                    new File("test/resources/"));
             Files.writeString(tmpFile.toPath(), csvData);
 
             FileBackedTaskManager manager = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
@@ -108,6 +108,57 @@ public class FileBackedTaskManagerTest {
         } catch (IOException e) {
             System.err.println("Ошибка в shouldRestoreIdCounterAsMaxIdPlusOne");
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    @DisplayName("Проверка восстановления всех полей при загрузке задач с разными статусами")
+    void shouldSaveAndLoadTasksWithDifferentStatuses() {
+        try {
+            File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv");
+
+            TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
+
+            Task doneTask = new Task(1, "Задача 1", "Описание", TaskStatus.DONE);
+            Epic inProgressEpic = new Epic(2, "Эпик", "Описание эпика");
+            inProgressEpic.setStatus(TaskStatus.IN_PROGRESS);
+
+            Subtask newSubtask = new Subtask(3, "Подзадача", "Описание", TaskStatus.NEW, 2);
+            Subtask doneSubtask = new Subtask(4, "Подзадача 2", "Описание", TaskStatus.DONE, 2);
+
+            manager.createTask(doneTask);
+            manager.createEpic(inProgressEpic);
+            manager.createSubtask(newSubtask);
+            manager.createSubtask(doneSubtask);
+
+            TaskManager loadedManager = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
+
+            Task loadedTask = loadedManager.getTask(1);
+            assertEquals(doneTask.getStatus(), loadedTask.getStatus(), "Сравниваем значение поля 'Status' у TASK");
+            assertEquals(doneTask.getTitle(), loadedTask.getTitle(), "Сравниваем значение поля 'Title' у TASK");
+            assertEquals(doneTask.getDescription(), loadedTask.getDescription(), "Сравниваем значение поля 'Description' у TASK");
+
+            Epic loadedEpic = loadedManager.getEpic(2);
+            assertEquals(inProgressEpic.getStatus(), loadedEpic.getStatus(), "Сравниваем значение поля 'Status' у EPIC");
+            assertEquals(inProgressEpic.getTitle(), loadedEpic.getTitle(), "Сравниваем значение поля 'Title' у EPIC");
+            assertEquals(inProgressEpic.getDescription(), loadedEpic.getDescription(), "Сравниваем значение поля 'Description' у EPIC");
+            assertEquals(inProgressEpic.getSubtaskIds(), loadedEpic.getSubtaskIds(), "Сравниваем значение 'subtaskIds' у EPIC");
+
+            Subtask loadedNewSubtask = loadedManager.getSubtask(3);
+            assertEquals(newSubtask.getStatus(), loadedNewSubtask.getStatus(), "Сравниваем значение поля 'Status' у SUBTASK");
+            assertEquals(newSubtask.getTitle(), loadedNewSubtask.getTitle(), "Сравниваем значение поля 'Title' у SUBTASK");
+            assertEquals(newSubtask.getDescription(), loadedNewSubtask.getDescription(), "Сравниваем значение поля 'Description' у SUBTASK");
+            assertEquals(newSubtask.getEpicId(), loadedNewSubtask.getEpicId(), "Сравниваем значение поля 'EpicId' у SUBTASK");
+
+            Subtask loadedDoneSubtask = loadedManager.getSubtask(4);
+            assertEquals(doneSubtask.getStatus(), loadedDoneSubtask.getStatus(), "Статус DONE подзадачи должен сохраниться");
+            assertEquals(doneSubtask.getTitle(), loadedDoneSubtask.getTitle(), "Сравниваем значение поля 'Title' у SUBTASK");
+            assertEquals(doneSubtask.getDescription(), loadedDoneSubtask.getDescription(), "Сравниваем значение поля 'Description' у SUBTASK");
+            assertEquals(doneSubtask.getEpicId(), loadedDoneSubtask.getEpicId(), "Сравниваем значение поля 'EpicId' у SUBTASK");
+
+            tmpFile.deleteOnExit();
+        } catch (IOException e) {
+            fail("Тест упал из-за IOException в shouldSaveAndLoadTasksWithDifferentStatuses" + e.getMessage());
         }
     }
 }
