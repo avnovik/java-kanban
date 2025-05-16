@@ -1,7 +1,7 @@
-package main.ya.hw.taskmanagerapp.manager;
+package ya.hw.taskmanagerapp.manager;
 
-import main.ya.hw.taskmanagerapp.manager.impl.InMemoryHistoryManager;
-import main.ya.hw.taskmanagerapp.manager.impl.InMemoryTaskManager;
+import ya.hw.taskmanagerapp.manager.impl.InMemoryHistoryManager;
+import ya.hw.taskmanagerapp.manager.impl.InMemoryTaskManager;
 
 /**
  * Фабрика для создания менеджеров задач.

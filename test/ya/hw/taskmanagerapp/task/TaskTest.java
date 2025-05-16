@@ -1,11 +1,9 @@
 package ya.hw.taskmanagerapp.task;
 
-import main.ya.hw.taskmanagerapp.manager.Managers;
-import main.ya.hw.taskmanagerapp.manager.TaskManager;
-import main.ya.hw.taskmanagerapp.task.Task;
-import main.ya.hw.taskmanagerapp.task.TaskStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ya.hw.taskmanagerapp.manager.Managers;
+import ya.hw.taskmanagerapp.manager.TaskManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

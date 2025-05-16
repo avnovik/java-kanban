@@ -1,15 +1,13 @@
 package ya.hw.taskmanagerapp.task;
 
-import main.ya.hw.taskmanagerapp.manager.Managers;
-import main.ya.hw.taskmanagerapp.manager.TaskManager;
-import main.ya.hw.taskmanagerapp.task.Epic;
-import main.ya.hw.taskmanagerapp.task.Subtask;
-import main.ya.hw.taskmanagerapp.task.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ya.hw.taskmanagerapp.manager.Managers;
+import ya.hw.taskmanagerapp.manager.TaskManager;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EpicTest {
     private Epic epic;

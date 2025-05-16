@@ -1,7 +1,7 @@
-package main.ya.hw.taskmanagerapp.manager.impl;
+package ya.hw.taskmanagerapp.manager.impl;
 
-import main.ya.hw.taskmanagerapp.manager.HistoryManager;
-import main.ya.hw.taskmanagerapp.task.Task;
+import ya.hw.taskmanagerapp.manager.HistoryManager;
+import ya.hw.taskmanagerapp.task.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;

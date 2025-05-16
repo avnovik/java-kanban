@@ -1,4 +1,4 @@
-package main.ya.hw.taskmanagerapp.task;
+package ya.hw.taskmanagerapp.task;
 
 public class Subtask extends Task {
     private final int epicId;

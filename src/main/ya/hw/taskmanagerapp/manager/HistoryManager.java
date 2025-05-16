@@ -1,6 +1,6 @@
-package main.ya.hw.taskmanagerapp.manager;
+package ya.hw.taskmanagerapp.manager;
 
-import main.ya.hw.taskmanagerapp.task.Task;
+import ya.hw.taskmanagerapp.task.Task;
 
 import java.util.List;
 
