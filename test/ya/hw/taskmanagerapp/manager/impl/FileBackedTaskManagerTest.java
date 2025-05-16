@@ -21,7 +21,7 @@ public class FileBackedTaskManagerTest {
     void shouldSaveAndLoadEmptyManager() {
         try {
             File tmpFile = createTempFile("shouldSaveAndLoadEmptyManager_", ".csv",
-                    new File("test/resources/"));
+                    new File("src/main/resources/"));
             TaskManager loaded = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
 
             tmpFile.deleteOnExit();
@@ -37,7 +37,7 @@ public class FileBackedTaskManagerTest {
     void shouldSaveAndLoadTasks() {
         try {
             File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv",
-                    new File("test/resources/"));
+                    new File("src/main/resources/"));
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
 
             manager.createTask(new Task(1, "Task", "SomeTask", TaskStatus.NEW));
@@ -56,7 +56,7 @@ public class FileBackedTaskManagerTest {
     void shouldSaveAndLoadSomeTasks() {
         try {
             File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv",
-                    new File("test/resources/"));
+                    new File("src/main/resources/"));
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
             Task task1 = new Task(1, "Помыть посуду", "Срочно!", TaskStatus.NEW);
             Task task2 = new Task(2, "Купить продукты", "Молоко, хлеб", TaskStatus.NEW);
@@ -95,7 +95,7 @@ public class FileBackedTaskManagerTest {
                     "5,EPIC,Epic 1,DONE,Description 2,\n" +
                     "10,SUBTASK,Subtask 1,IN_PROGRESS,Description 3,5";
             File tmpFile = createTempFile("shouldRestoreIdCounterAsMaxIdPlusOne_", ".csv",
-                    new File("test/resources/"));
+                    new File("src/main/resources/"));
             Files.writeString(tmpFile.toPath(), csvData);
 
             FileBackedTaskManager manager = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
@@ -116,7 +116,7 @@ public class FileBackedTaskManagerTest {
     void shouldSaveAndLoadTasksWithDifferentStatuses() {
         try {
             File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv",
-                    new File("test/resources/"));
+                    new File("src/main/resources/"));
 
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
 
@@ -159,7 +159,7 @@ public class FileBackedTaskManagerTest {
 
             tmpFile.deleteOnExit();
         } catch (IOException e) {
-            fail("Тест упал из-за IOException в shouldSaveAndLoadTasksWithDifferentStatuses");
+            fail("Тест упал из-за IOException в shouldSaveAndLoadTasksWithDifferentStatuses" + e.getMessage());
         }
     }
 }
