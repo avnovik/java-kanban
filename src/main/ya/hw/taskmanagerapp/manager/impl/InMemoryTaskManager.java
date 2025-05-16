@@ -2,24 +2,24 @@ package ya.hw.taskmanagerapp.manager.impl;
 
 import ya.hw.taskmanagerapp.manager.HistoryManager;
 import ya.hw.taskmanagerapp.manager.TaskManager;
-import ya.hw.taskmanagerapp.task.Epic;
-import ya.hw.taskmanagerapp.task.Subtask;
-import ya.hw.taskmanagerapp.task.Task;
-import ya.hw.taskmanagerapp.task.TaskStatus;
+import ya.hw.taskmanagerapp.task.*;
 
 import java.util.*;
 
+/**
+ * Реализация TaskManager с хранением данных в памяти.
+ * Автоматически обновляет историю просмотров через HistoryManager.
+ */
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasks = new HashMap<>();
-    private final Map<Integer, Epic> epics = new HashMap<>();
-    private final Map<Integer, Subtask> subtasks = new HashMap<>();
-    private int idCounter = 0;
+    protected final Map<Integer, Task> tasks = new HashMap<>();
+    protected final Map<Integer, Epic> epics = new HashMap<>();
+    protected final Map<Integer, Subtask> subtasks = new HashMap<>();
+    protected int idCounter = 0;
     private final HistoryManager historyManager;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
     }
-
 
     @Override
     public List<Task> getAllTasks() {

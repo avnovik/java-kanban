@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import ya.hw.taskmanagerapp.manager.Managers;
 import ya.hw.taskmanagerapp.manager.TaskManager;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EpicTest {
     private Epic epic;

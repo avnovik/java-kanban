@@ -1,13 +1,10 @@
 package ya.hw.taskmanagerapp.manager.impl;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import ya.hw.taskmanagerapp.manager.Managers;
 import ya.hw.taskmanagerapp.manager.TaskManager;
-import ya.hw.taskmanagerapp.task.Epic;
-import ya.hw.taskmanagerapp.task.Subtask;
-import ya.hw.taskmanagerapp.task.Task;
-import ya.hw.taskmanagerapp.task.TaskStatus;
+import ya.hw.taskmanagerapp.task.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -65,10 +62,10 @@ public class InMemoryTaskManagerTest {
     @Test
     void addSubtask_updatesEpicStatus() {
         Epic epic = manager.getEpic(epicId);
-        assertEquals(TaskStatus.NEW,epic.getStatus(), "Проверяем статус NEW");
+        assertEquals(TaskStatus.NEW, epic.getStatus(), "Проверяем статус NEW");
 
         manager.createSubtask(new Subtask(0, "Subtask", "Desc", TaskStatus.IN_PROGRESS, epicId));
-        assertEquals(TaskStatus.IN_PROGRESS,epic.getStatus(), "Проверяем смену статуса на IN_PROGRESS");
+        assertEquals(TaskStatus.IN_PROGRESS, epic.getStatus(), "Проверяем смену статуса на IN_PROGRESS");
 
         manager.createSubtask(new Subtask(0, "Subtask1", "Desc", TaskStatus.DONE, epicId));
         assertEquals(TaskStatus.IN_PROGRESS, manager.getEpic(epicId).getStatus(), "Проверяем статус IN_PROGRESS");
