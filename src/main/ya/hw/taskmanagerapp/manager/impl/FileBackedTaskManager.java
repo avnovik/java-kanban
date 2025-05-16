@@ -17,8 +17,8 @@ import java.util.List;
  * Восстанавливает данные менеджера из файла при запуске программы.
  */
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    static private final String pathFileForHistory = "src/main/resources/history.csv";
-    static private final String firstLine = "id,type,name,status,description,epic\n";
+    private static final String pathFileForHistory = "src/main/resources/history.csv";
+    private static final String firstLine = "id,type,name,status,description,epic\n";
     private final Path file;
 
     public FileBackedTaskManager(Path file) {
