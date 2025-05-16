@@ -1,5 +1,6 @@
 package ya.hw.taskmanagerapp.manager.impl;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ya.hw.taskmanagerapp.manager.TaskManager;
@@ -11,17 +12,32 @@ import ya.hw.taskmanagerapp.task.TaskStatus;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static java.io.File.createTempFile;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FileBackedTaskManagerTest {
+    private static final Path TEST_DIR = Paths.get("test/resources");
+
+    @BeforeAll
+    static void setup() throws IOException {
+        try {
+            if (!Files.exists(TEST_DIR)) {
+                Files.createDirectories(TEST_DIR);
+            }
+        } catch (IOException e) {
+            fail("!!!DANGER!!! не смогли создать директорию в BeforeAll :" + e.getMessage());
+        }
+
+    }
+
     @Test
     @DisplayName("Проверка сохранения и загрузки пустого файла")
     void shouldSaveAndLoadEmptyManager() {
         try {
-            File tmpFile = createTempFile("shouldSaveAndLoadEmptyManager_", ".csv",
-                    new File("test/resources/"));
+            File tmpFile = createTempFile("shouldSaveAndLoadEmptyManager_", ".csv", TEST_DIR.toFile());
             TaskManager loaded = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
 
             tmpFile.deleteOnExit();
