@@ -132,7 +132,7 @@ public class FileBackedTaskManagerTest {
     void shouldSaveAndLoadTasksWithDifferentStatuses() {
         File tmpFile = null;
         try {
-            tmpFile = createTempFile("shouldSaveAndLoadEmptyManager_", ".csv");
+            tmpFile = createTempFile("shouldSaveAndLoadEmptyManager_", ".csv", TEST_DIR.toFile());
 
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
 
