@@ -30,7 +30,6 @@ public class FileBackedTaskManagerTest {
         } catch (IOException e) {
             fail("!!!DANGER!!! не смогли создать директорию в BeforeAll :" + e.getMessage());
         }
-
     }
 
     @Test
@@ -43,8 +42,7 @@ public class FileBackedTaskManagerTest {
             tmpFile.deleteOnExit();
             assertTrue(loaded.getAllTasks().isEmpty());
         } catch (IOException e) {
-            System.err.println("Ошибка создания/удаления файла в shouldSaveAndLoadEmptyManager");
-            e.printStackTrace();
+            fail("Ошибка создания/удаления файла в shouldSaveAndLoadEmptyManager" + e.getMessage());
         }
     }
 
@@ -62,8 +60,7 @@ public class FileBackedTaskManagerTest {
             tmpFile.deleteOnExit();
             assertEquals(1, loaded.getAllTasks().size());
         } catch (IOException e) {
-            System.err.println("Ошибка создания/удаления файла в shouldSaveAndLoadTasks");
-            e.printStackTrace();
+            fail("Ошибка создания/удаления файла в shouldSaveAndLoadTasks" + e.getMessage());
         }
     }
 
@@ -97,8 +94,7 @@ public class FileBackedTaskManagerTest {
             tmpFile.deleteOnExit();
             assertEquals(7, sumAllTypeTasks);
         } catch (IOException e) {
-            System.err.println("Ошибка создания/удаления файла в shouldSaveAndLoadSomeTasks");
-            e.printStackTrace();
+            fail("Ошибка создания/удаления файла в shouldSaveAndLoadSomeTasks" + e.getMessage());
         }
     }
 
@@ -122,8 +118,7 @@ public class FileBackedTaskManagerTest {
             tmpFile.deleteOnExit();
             assertEquals(11, newId, "ID новой задачи должен быть 11 (maxId + 1)");
         } catch (IOException e) {
-            System.err.println("Ошибка в shouldRestoreIdCounterAsMaxIdPlusOne");
-            e.printStackTrace();
+            fail("Ошибка в shouldRestoreIdCounterAsMaxIdPlusOne" + e.getMessage());
         }
     }
 
