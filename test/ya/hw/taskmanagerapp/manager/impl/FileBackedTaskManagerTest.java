@@ -114,9 +114,8 @@ public class FileBackedTaskManagerTest {
     @Test
     @DisplayName("Проверка восстановления всех полей при загрузке задач с разными статусами")
     void shouldSaveAndLoadTasksWithDifferentStatuses() {
-        File tmpFile = null;
         try {
-            tmpFile = createTempFile("shouldSaveAndLoadTasksWithDifferentStatuses_", ".csv",
+            File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv",
                     new File("test/resources/"));
 
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
@@ -158,12 +157,9 @@ public class FileBackedTaskManagerTest {
             assertEquals(doneSubtask.getDescription(), loadedDoneSubtask.getDescription(), "Сравниваем значение поля 'Description' у SUBTASK");
             assertEquals(doneSubtask.getEpicId(), loadedDoneSubtask.getEpicId(), "Сравниваем значение поля 'EpicId' у SUBTASK");
 
+            tmpFile.deleteOnExit();
         } catch (IOException e) {
             fail("Тест упал из-за IOException в shouldSaveAndLoadTasksWithDifferentStatuses");
-        } finally {
-            if (tmpFile != null) {
-                tmpFile.deleteOnExit();
-            }
         }
     }
 }
