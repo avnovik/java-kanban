@@ -115,7 +115,8 @@ public class FileBackedTaskManagerTest {
     @DisplayName("Проверка восстановления всех полей при загрузке задач с разными статусами")
     void shouldSaveAndLoadTasksWithDifferentStatuses() {
         try {
-            File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv");
+            File tmpFile = createTempFile("shouldSaveAndLoadEmptyManager_", ".csv",
+                    new File("test/resources/"));
 
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
 
