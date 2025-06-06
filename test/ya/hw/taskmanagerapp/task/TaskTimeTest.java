@@ -38,7 +38,7 @@ public class TaskTimeTest {
 
         assertEquals(starSubtask1, epic.getStartTime());
         assertEquals(Duration.ofMinutes(90), epic.getDuration());
-        assertEquals(starSubtask2.plusMinutes(60), epic.getEndTime(List.of(subtask1, subtask2)));
+        assertEquals(starSubtask2.plusMinutes(60), epic.getEndTime());
     }
 
     @Test

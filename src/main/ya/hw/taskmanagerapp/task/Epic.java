@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class Epic extends Task {
     private final List<Integer> subtaskIds;
+    private LocalDateTime endTime;
 
     public Epic(int id, String tittle, String description) {
         super(id, tittle, description, TaskStatus.NEW, null, null);
@@ -30,34 +31,38 @@ public class Epic extends Task {
         subtaskIds.clear();
     }
 
-    public LocalDateTime getEndTime(List<Subtask> subtasksOfThisEpic) {
-        if (subtasksOfThisEpic.isEmpty()) {
-            return null;
-        }
-        return subtasksOfThisEpic.stream()
-                .map(Subtask::getEndTime)
-                .filter(Objects::nonNull)
-                .max(LocalDateTime::compareTo)
-                .orElse(null);
+    void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
-    public void updateTime(List<Subtask> subtasksOfThisEpic) {
-        if (subtasksOfThisEpic.isEmpty()) {
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void updateTime(List<Subtask> subtasks) {
+        if (subtasks.isEmpty()) {
             this.startTime = null;
             this.duration = Duration.ZERO;
+            this.endTime = null;
             return;
         }
 
-        this.startTime = subtasksOfThisEpic.stream()
+        this.startTime = subtasks.stream()
                 .map(Subtask::getStartTime)
                 .filter(Objects::nonNull)
                 .min(LocalDateTime::compareTo)
                 .orElse(null);
 
-        this.duration = subtasksOfThisEpic.stream()
+        this.duration = subtasks.stream()
                 .map(Subtask::getDuration)
                 .filter(Objects::nonNull)
                 .reduce(Duration.ZERO, Duration::plus);
+
+        this.endTime = subtasks.stream()
+                .map(Subtask::getEndTime)
+                .filter(Objects::nonNull)
+                .max(LocalDateTime::compareTo)
+                .orElse(null);
     }
 
     @Override
@@ -73,6 +78,9 @@ public class Epic extends Task {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", duration=" + duration +
                 '}';
     }
 }
