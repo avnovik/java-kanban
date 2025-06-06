@@ -54,7 +54,7 @@ public class FileBackedTaskManagerTest {
                     new File("test/resources/"));
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
 
-            manager.createTask(new Task(1, "Task", "SomeTask", TaskStatus.NEW));
+            manager.createTask(new Task(1, "Task", "SomeTask", TaskStatus.NEW, null, null));
             TaskManager loaded = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
 
             tmpFile.deleteOnExit();
@@ -71,13 +71,13 @@ public class FileBackedTaskManagerTest {
             File tmpFile = createTempFile("shouldSaveAndLoadTasks_", ".csv",
                     new File("test/resources/"));
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
-            Task task1 = new Task(1, "Помыть посуду", "Срочно!", TaskStatus.NEW);
-            Task task2 = new Task(2, "Купить продукты", "Молоко, хлеб", TaskStatus.NEW);
+            Task task1 = new Task(1, "Помыть посуду", "Срочно!", TaskStatus.NEW, null, null);
+            Task task2 = new Task(2, "Купить продукты", "Молоко и хлеб", TaskStatus.NEW, null, null);
 
             Epic epicWithSubtasks = new Epic(3, "Переезд", "Организация переезда");
-            Subtask subtask1 = new Subtask(4, "Упаковать вещи", "Коробки", TaskStatus.NEW, 3);
-            Subtask subtask2 = new Subtask(5, "Нанять грузчиков", "", TaskStatus.DONE, 3);
-            Subtask subtask3 = new Subtask(6, "Заказать фургон", "Газель", TaskStatus.IN_PROGRESS, 3);
+            Subtask subtask1 = new Subtask(4, "Упаковать вещи", "Коробки", TaskStatus.NEW, 3, null, null);
+            Subtask subtask2 = new Subtask(5, "Нанять грузчиков", "", TaskStatus.DONE, 3, null, null);
+            Subtask subtask3 = new Subtask(6, "Заказать фургон", "Газель", TaskStatus.IN_PROGRESS, 3, null, null);
 
             Epic epicWithoutSubtasks = new Epic(7, "Пустой эпик", "Без подзадач");
 
@@ -102,17 +102,17 @@ public class FileBackedTaskManagerTest {
     @DisplayName("При загрузке из файла idCounter должен восстанавливаться как максимальный ID + 1")
     void shouldRestoreIdCounterAsMaxIdPlusOne() {
         try {
-            String csvData = "id,type,name,status,description,epic\n" +
-                    "1,TASK,Task 1,NEW,Description 1,\n" +
-                    "5,EPIC,Epic 1,DONE,Description 2,\n" +
-                    "10,SUBTASK,Subtask 1,IN_PROGRESS,Description 3,5";
+            String csvData = "id,type,name,status,description,startTime,duration,epic\n" +
+                    "1,TASK,Task 1,NEW,Description 1, , \n" +
+                    "5,EPIC,Epic 1,DONE,Description 2, , \n" +
+                    "10,SUBTASK,Subtask 1,IN_PROGRESS,Description 3, , , 5";
             File tmpFile = createTempFile("shouldRestoreIdCounterAsMaxIdPlusOne_", ".csv",
                     new File("test/resources/"));
             Files.writeString(tmpFile.toPath(), csvData);
 
             FileBackedTaskManager manager = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
 
-            Task newTask = new Task(-1, "New Task", "New Desc", TaskStatus.NEW);
+            Task newTask = new Task(-1, "New Task", "New Desc", TaskStatus.NEW, null, null);
             int newId = manager.createTask(newTask);
 
             tmpFile.deleteOnExit();
@@ -131,12 +131,12 @@ public class FileBackedTaskManagerTest {
 
             TaskManager manager = new FileBackedTaskManager(tmpFile.toPath());
 
-            Task doneTask = new Task(1, "Задача 1", "Описание", TaskStatus.DONE);
+            Task doneTask = new Task(1, "Задача 1", "Описание", TaskStatus.DONE, null, null);
             Epic inProgressEpic = new Epic(2, "Эпик", "Описание эпика");
             inProgressEpic.setStatus(TaskStatus.IN_PROGRESS);
 
-            Subtask newSubtask = new Subtask(3, "Подзадача", "Описание", TaskStatus.NEW, 2);
-            Subtask doneSubtask = new Subtask(4, "Подзадача 2", "Описание", TaskStatus.DONE, 2);
+            Subtask newSubtask = new Subtask(3, "Подзадача", "Описание", TaskStatus.NEW, 2, null, null);
+            Subtask doneSubtask = new Subtask(4, "Подзадача 2", "Описание", TaskStatus.DONE, 2, null, null);
 
             manager.createTask(doneTask);
             manager.createEpic(inProgressEpic);

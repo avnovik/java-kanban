@@ -9,6 +9,8 @@ import ya.hw.taskmanagerapp.task.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,7 +20,7 @@ import java.util.List;
  */
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private static final String pathFileForHistory = "src/main/resources/history.csv";
-    private static final String firstLine = "id,type,name,status,description,epic\n";
+    private static final String firstLine = "id,type,name,status,description,startTime,duration,epic\n";
     private final Path file;
 
     public FileBackedTaskManager(Path file) {
@@ -50,7 +52,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private String taskToCsv(Task task) {
-        String type = task.getType().name();
+        String durationMinutes = task.getDuration() != null
+                ? String.valueOf(task.getDuration().toMinutes())
+                : "";
+        String startTimeStr = task.getStartTime() != null
+                ? task.getStartTime().toString()
+                : "";
 
         //Получаем epicId (только для подзадач)
         String epicId = "";
@@ -60,11 +67,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
         return String.join(",",
                 String.valueOf(task.getId()),
-                type,
+                task.getType().name(),
                 task.getTitle(),
                 task.getStatus().name(),
                 task.getDescription(),
-                epicId);
+                startTimeStr,
+                durationMinutes,
+                epicId
+        );
     }
 
 
@@ -110,7 +120,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private static Task parseCsvLine(String csvLine) {
         String[] parts = csvLine.split(",");
-        System.out.println();
         try {
             int id = Integer.parseInt(parts[0].trim());
             TaskType type = TaskType.valueOf(parts[1].trim());
@@ -118,16 +127,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             TaskStatus status = TaskStatus.valueOf(parts[3].trim());
             String description = parts[4].trim();
 
+            LocalDateTime startTime = parts.length > 5 && !parts[5].trim().isEmpty()
+                    ? LocalDateTime.parse(parts[5].trim())
+                    : null;
+
+            Duration duration = parts.length > 6 && !parts[6].trim().isEmpty()
+                    ? Duration.ofMinutes(Long.parseLong(parts[6].trim()))
+                    : null;
+
             switch (type) {
                 case TASK:
-                    return new Task(id, title, description, status);
+                    return new Task(id, title, description, status, startTime, duration);
                 case EPIC:
                     Epic epic = new Epic(id, title, description);
                     epic.setStatus(status);
                     return epic;
                 case SUBTASK:
-                    int epicId = parts.length > 5 ? Integer.parseInt(parts[5].trim()) : -1;
-                    return new Subtask(id, title, description, status, epicId);
+                    int epicId = parts.length > 6 ? Integer.parseInt(parts[7].trim()) : -1;
+                    return new Subtask(id, title, description, status, epicId, startTime, duration);
                 default:
                     return null;
             }
@@ -217,13 +234,23 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         Path file = Path.of(pathFileForHistory);
         TaskManager manager = new FileBackedTaskManager(file);
 
-        Task task1 = new Task(1, "Помыть посуду", "Срочно!", TaskStatus.NEW);
-        Task task2 = new Task(2, "Купить продукты", "Молоко, хлеб", TaskStatus.NEW);
+        Task task1 = new Task(1, "Помыть посуду", "Срочно!", TaskStatus.NEW,
+                LocalDateTime.of(2025, 1, 10, 10, 0, 0, 0),
+                Duration.ofMinutes(10));
+        Task task2 = new Task(2, "Купить продукты", "Молоко и хлеб", TaskStatus.NEW,
+                LocalDateTime.of(2025, 4, 1, 0, 0, 0, 0),
+                Duration.ofMinutes(180));
 
         Epic epicWithSubtasks = new Epic(3, "Переезд", "Организация переезда");
-        Subtask subtask1 = new Subtask(4, "Упаковать вещи", "Коробки", TaskStatus.NEW, 3);
-        Subtask subtask2 = new Subtask(5, "Нанять грузчиков", "", TaskStatus.DONE, 3);
-        Subtask subtask3 = new Subtask(6, "Заказать фургон", "Газель", TaskStatus.IN_PROGRESS, 3);
+        Subtask subtask1 = new Subtask(4, "Упаковать вещи", "Коробки", TaskStatus.NEW, 3,
+                LocalDateTime.of(2025, 9, 5, 10, 0, 0, 0),
+                Duration.ofDays(5));
+        Subtask subtask2 = new Subtask(5, "Нанять грузчиков", "", TaskStatus.DONE, 3,
+                LocalDateTime.of(2025, 10, 10, 10, 0, 0, 0),
+                Duration.ofDays(1));
+        Subtask subtask3 = new Subtask(6, "Заказать фургон", "Газель", TaskStatus.IN_PROGRESS, 3,
+                LocalDateTime.of(2025, 11, 7, 10, 0, 0, 0),
+                Duration.ofDays(1));
 
         Epic epicWithoutSubtasks = new Epic(7, "Пустой эпик", "Без подзадач");
 

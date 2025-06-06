@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TaskTest {
-    private final Task task = new Task(1, "Task", "Description", TaskStatus.NEW);
-    private final Task sameIdTask = new Task(1, "Different", "Another desc", TaskStatus.DONE);
-    private final Task differentIdTask = new Task(2, "Task", "Description", TaskStatus.NEW);
+    private final Task task = new Task(1, "Task", "Description", TaskStatus.NEW, null, null);
+    private final Task sameIdTask = new Task(1, "Different", "Another desc", TaskStatus.DONE, null, null);
+    private final Task differentIdTask = new Task(2, "Task", "Description", TaskStatus.NEW, null, null);
 
     @Test
     @DisplayName("Задачи с одинаковым ID должны считаться равными, даже если другие поля отличаются")
@@ -28,8 +28,8 @@ public class TaskTest {
     @Test
     @DisplayName("Сравнение задач: равны при одинаковом ID, независимо от других атрибутов")
     void tasksWithSameIdShouldBeEqual() {
-        Task task1 = new Task(1, "Task 1", "Description", TaskStatus.NEW);
-        Task task2 = new Task(1, "Task 2", "Another desc", TaskStatus.DONE);
+        Task task1 = new Task(1, "Task 1", "Description", TaskStatus.NEW, null, null);
+        Task task2 = new Task(1, "Task 2", "Another desc", TaskStatus.DONE, null, null);
 
         assertEquals(task1, task2, "Задачи с одинаковым id должны быть равны");
     }
@@ -37,7 +37,7 @@ public class TaskTest {
     @Test
     @DisplayName("Сеттеры должны корректно изменять все поля задачи")
     void setters_changeTaskFields() {
-        Task task = new Task(1, "Original", "Desc", TaskStatus.NEW);
+        Task task = new Task(1, "Original", "Desc", TaskStatus.NEW, null, null);
 
         task.setTitle("New Title");
         task.setDescription("New Desc");
@@ -52,7 +52,7 @@ public class TaskTest {
     @DisplayName("Добавление задачи в менеджер не должно изменять её содержимое")
     void taskShouldNotChangeAfterAddingToManager() {
         TaskManager manager = Managers.getDefault();
-        Task originalTask = new Task(0, "Original", "Desc", TaskStatus.NEW);
+        Task originalTask = new Task(0, "Original", "Desc", TaskStatus.NEW, null, null);
 
         int taskId = manager.createTask(originalTask);
         Task savedTask = manager.getTask(taskId);
@@ -66,7 +66,7 @@ public class TaskTest {
     @DisplayName("Изменение статуса задачи через сеттер")
     void taskStatusUpdateViaSetter() {
         TaskManager manager = Managers.getDefault();
-        Task task = new Task(1, "Task", "Desc", TaskStatus.NEW);
+        Task task = new Task(1, "Task", "Desc", TaskStatus.NEW, null, null);
         manager.createTask(task);
         task.setStatus(TaskStatus.DONE);
 

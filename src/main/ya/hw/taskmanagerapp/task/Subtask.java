@@ -1,10 +1,14 @@
 package ya.hw.taskmanagerapp.task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
     private final int epicId;
 
-    public Subtask(int id, String tittle, String description, TaskStatus status, int epicId) {
-        super(id, tittle, description, status);
+    public Subtask(int id, String tittle, String description, TaskStatus status, int epicId,
+                   LocalDateTime startTime, Duration duration) {
+        super(id, tittle, description, status, startTime, duration);
         this.epicId = epicId;
     }
 

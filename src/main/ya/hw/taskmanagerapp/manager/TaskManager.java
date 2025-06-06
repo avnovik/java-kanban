@@ -3,6 +3,7 @@ package ya.hw.taskmanagerapp.manager;
 import ya.hw.taskmanagerapp.task.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Управление задачами, эпиками и подзадачами.
@@ -71,4 +72,9 @@ public interface TaskManager {
      * sp5. Показывает последние просмотренные пользователем задачи.
      */
     List<Task> getHistory();
+
+    /**
+     * sp8. Показывает список задач в порядке приоритета.
+     */
+    Set<Task> getPrioritizedTasks();
 }
