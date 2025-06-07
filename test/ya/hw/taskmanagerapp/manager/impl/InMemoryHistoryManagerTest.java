@@ -20,8 +20,8 @@ public class InMemoryHistoryManagerTest {
     @BeforeEach
     void setUp() {
         historyManager = Managers.getDefaultHistory();
-        task = new Task(1, "Task", "Desc", TaskStatus.NEW);
-        task2 = new Task(2, "Task 2", "Description", TaskStatus.NEW);
+        task = new Task(1, "Task", "Desc", TaskStatus.NEW, null, null);
+        task2 = new Task(2, "Task 2", "Description", TaskStatus.NEW, null, null);
     }
 
     @Test
@@ -52,8 +52,8 @@ public class InMemoryHistoryManagerTest {
     @Test
     @DisplayName("История просмотров должна сохранять порядок добавления задач (FIFO)")
     void getHistory_returnsTasksInFIFOOrder() {
-        Task task1 = new Task(1, "Task1", "", TaskStatus.NEW);
-        Task task2 = new Task(2, "Task2", "", TaskStatus.NEW);
+        Task task1 = new Task(1, "Task1", "", TaskStatus.NEW, null, null);
+        Task task2 = new Task(2, "Task2", "", TaskStatus.NEW, null, null);
 
         historyManager.add(task1);
         historyManager.add(task2);
@@ -72,6 +72,7 @@ public class InMemoryHistoryManagerTest {
     }
 
     @Test
+    @DisplayName("Удаленная задача не отображается в истории")
     void remove_TaskFromHistory() {
         historyManager.add(task);
         historyManager.add(task2);

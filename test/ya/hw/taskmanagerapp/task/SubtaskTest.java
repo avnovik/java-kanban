@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class SubtaskTest {
-    private final Subtask subtask = new Subtask(1, "Subtask", "Description", TaskStatus.NEW, 2);
-    private final Subtask sameIdSubtask = new Subtask(1, "Different", "Another desc", TaskStatus.DONE, 2);
-    private final Subtask differentIdSubtask = new Subtask(2, "Subtask", "Description", TaskStatus.NEW, 2);
+    private final Subtask subtask = new Subtask(1, "Subtask", "Description", TaskStatus.NEW, 2, null, null);
+    private final Subtask sameIdSubtask = new Subtask(1, "Different", "Another desc", TaskStatus.DONE, 2, null, null);
+    private final Subtask differentIdSubtask = new Subtask(2, "Subtask", "Description", TaskStatus.NEW, 2, null, null);
 
     @Test
     void equals_returnsTrueForSameId() {
