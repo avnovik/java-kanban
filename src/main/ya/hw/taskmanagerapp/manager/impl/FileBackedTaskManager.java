@@ -102,13 +102,31 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         maxIdCounterInFile = task.getId();
                     }
                 }
-                for (Subtask subtask : manager.subtasks.values()) {
-                    Epic epic = manager.epics.get(subtask.getEpicId());
-                    if (epic != null) {
-                        if (!epic.getSubtaskIds().contains(subtask.getId())) {
-                            epic.addSubtaskId(subtask.getId());
-                        }
+
+            }
+            // Восстанавливаем связи подзадач и эпиков
+            for (Subtask subtask : manager.subtasks.values()) {
+                Epic epic = manager.epics.get(subtask.getEpicId());
+                if (epic != null) {
+                    if (!epic.getSubtaskIds().contains(subtask.getId())) {
+                        epic.addSubtaskId(subtask.getId());
                     }
+                }
+            }
+            // Пересчитываем время для всех эпиков
+            for (Epic epic : manager.epics.values()) {
+                List<Subtask> subtasks = manager.getSubtasksByEpicId(epic.getId());
+                epic.updateTime(subtasks);
+            }
+
+            for (Task task : manager.tasks.values()) {
+                if (task.getStartTime() != null) {
+                    manager.prioritizedTasks.add(task);
+                }
+            }
+            for (Subtask subtask : manager.subtasks.values()) {
+                if (subtask.getStartTime() != null) {
+                    manager.prioritizedTasks.add(subtask);
                 }
             }
             manager.idCounter = maxIdCounterInFile;

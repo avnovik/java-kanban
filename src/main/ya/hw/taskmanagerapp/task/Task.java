@@ -12,10 +12,10 @@ public class Task {
     protected LocalDateTime startTime;
     protected Duration duration;
 
-    public Task(int id, String tittle, String description, TaskStatus status,
+    public Task(int id, String title, String description, TaskStatus status,
                 LocalDateTime startTime, Duration duration) {
         this.id = id;
-        this.title = tittle;
+        this.title = title;
         this.description = description;
         this.status = status;
         this.startTime = startTime;
@@ -34,8 +34,8 @@ public class Task {
         return title;
     }
 
-    public void setTitle(String tittle) {
-        this.title = tittle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -98,9 +98,11 @@ public class Task {
     public String toString() {
         return "Task{" +
                 "id=" + id +
-                ", tittle='" + title + '\'' +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
                 '}';
     }
 }

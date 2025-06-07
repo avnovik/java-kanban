@@ -3,9 +3,11 @@ package ya.hw.taskmanagerapp.manager.impl;
 import ya.hw.taskmanagerapp.manager.HistoryManager;
 import ya.hw.taskmanagerapp.manager.TaskManager;
 import ya.hw.taskmanagerapp.manager.exception.ManagerValidateException;
-import ya.hw.taskmanagerapp.task.*;
+import ya.hw.taskmanagerapp.task.Epic;
+import ya.hw.taskmanagerapp.task.Subtask;
+import ya.hw.taskmanagerapp.task.Task;
+import ya.hw.taskmanagerapp.task.TaskStatus;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -18,7 +20,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Subtask> subtasks = new HashMap<>();
     protected int idCounter = 0;
     private final HistoryManager historyManager;
-    private final Set<Task> prioritizedTasks = new TreeSet<>(
+    protected final Set<Task> prioritizedTasks = new TreeSet<>(
             Comparator.comparing(
                     Task::getStartTime,
                     Comparator.nullsLast(Comparator.naturalOrder())
