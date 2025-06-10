@@ -1,5 +1,7 @@
 package ya.hw.taskmanagerapp.task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -7,12 +9,17 @@ public class Task {
     protected String title;
     protected String description;
     protected TaskStatus status;
+    protected LocalDateTime startTime;
+    protected Duration duration;
 
-    public Task(int id, String tittle, String description, TaskStatus status) {
+    public Task(int id, String title, String description, TaskStatus status,
+                LocalDateTime startTime, Duration duration) {
         this.id = id;
-        this.title = tittle;
+        this.title = title;
         this.description = description;
         this.status = status;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public int getId() {
@@ -27,8 +34,8 @@ public class Task {
         return title;
     }
 
-    public void setTitle(String tittle) {
-        this.title = tittle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -45,6 +52,29 @@ public class Task {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (startTime == null || duration == null) {
+            return null;
+        }
+        return startTime.plus(duration);
     }
 
     public TaskType getType() {
@@ -68,9 +98,11 @@ public class Task {
     public String toString() {
         return "Task{" +
                 "id=" + id +
-                ", tittle='" + title + '\'' +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
                 '}';
     }
 }

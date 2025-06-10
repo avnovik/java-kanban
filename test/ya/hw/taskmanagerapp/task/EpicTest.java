@@ -30,8 +30,8 @@ public class EpicTest {
     @DisplayName("Статус эпика со всеми подзадачами NEW должен быть NEW")
     void withAllNewSubtasks_returnsNew() {
         int epicId = manager.createEpic(epic);
-        manager.createSubtask(new Subtask(2, "Sub1", "", TaskStatus.NEW, epicId));
-        manager.createSubtask(new Subtask(3, "Sub2", "", TaskStatus.NEW, epicId));
+        manager.createSubtask(new Subtask(2, "Sub1", "", TaskStatus.NEW, epicId, null, null));
+        manager.createSubtask(new Subtask(3, "Sub2", "", TaskStatus.NEW, epicId, null, null));
 
         assertEquals(TaskStatus.NEW, manager.getEpic(epicId).getStatus());
     }
@@ -40,8 +40,8 @@ public class EpicTest {
     @DisplayName("Статус эпика со всеми подзадачами DONE должен быть DONE")
     void withAllDoneSubtasks_returnsDone() {
         int epicId = manager.createEpic(epic);
-        manager.createSubtask(new Subtask(2, "Sub1", "", TaskStatus.DONE, epicId));
-        manager.createSubtask(new Subtask(3, "Sub2", "", TaskStatus.DONE, epicId));
+        manager.createSubtask(new Subtask(2, "Sub1", "", TaskStatus.DONE, epicId, null, null));
+        manager.createSubtask(new Subtask(3, "Sub2", "", TaskStatus.DONE, epicId, null, null));
 
         assertEquals(TaskStatus.DONE, manager.getEpic(epicId).getStatus());
     }
@@ -50,8 +50,8 @@ public class EpicTest {
     @DisplayName("Статус эпика с подзадачами NEW и DONE должен быть IN_PROGRESS")
     void withMixedStatusSubtasks_returnsInProgress() {
         int epicId = manager.createEpic(epic);
-        manager.createSubtask(new Subtask(2, "Sub1", "", TaskStatus.NEW, epicId));
-        manager.createSubtask(new Subtask(3, "Sub2", "", TaskStatus.DONE, epicId));
+        manager.createSubtask(new Subtask(2, "Sub1", "", TaskStatus.NEW, epicId, null, null));
+        manager.createSubtask(new Subtask(3, "Sub2", "", TaskStatus.DONE, epicId, null, null));
 
         assertEquals(TaskStatus.IN_PROGRESS, manager.getEpic(epicId).getStatus());
     }
@@ -60,8 +60,8 @@ public class EpicTest {
     @DisplayName("Статус эпика со всеми подзадачами IN_PROGRESS должен быть IN_PROGRESS")
     void withAllInProgressSubtasks_returnsInProgress() {
         int epicId = manager.createEpic(epic);
-        manager.createSubtask(new Subtask(2, "Sub1", "", TaskStatus.IN_PROGRESS, epicId));
-        manager.createSubtask(new Subtask(3, "Sub2", "", TaskStatus.IN_PROGRESS, epicId));
+        manager.createSubtask(new Subtask(2, "Sub1", "", TaskStatus.IN_PROGRESS, epicId, null, null));
+        manager.createSubtask(new Subtask(3, "Sub2", "", TaskStatus.IN_PROGRESS, epicId, null, null));
 
         assertEquals(TaskStatus.IN_PROGRESS, manager.getEpic(epicId).getStatus());
     }
@@ -70,7 +70,7 @@ public class EpicTest {
     @DisplayName("Удаление эпика должно удалять все его подзадачи")
     void deleteEpic_removesAllSubtasks() {
         int epicId = manager.createEpic(epic);
-        manager.createSubtask(new Subtask(2, "Sub", "", TaskStatus.NEW, epicId));
+        manager.createSubtask(new Subtask(2, "Sub", "", TaskStatus.NEW, epicId, null, null));
 
         manager.deleteEpic(epicId);
         assertTrue(manager.getAllSubtasks().isEmpty());
@@ -81,7 +81,7 @@ public class EpicTest {
     void deleteSubtaskRemovesIdFromEpic() {
         Epic epic = new Epic(1, "Epic", "Description");
         manager.createEpic(epic);
-        Subtask subtask = new Subtask(2, "Subtask", "Desc", TaskStatus.NEW, 1);
+        Subtask subtask = new Subtask(2, "Subtask", "Desc", TaskStatus.NEW, 1, null, null);
         manager.createSubtask(subtask);
 
         manager.deleteSubtask(2);
