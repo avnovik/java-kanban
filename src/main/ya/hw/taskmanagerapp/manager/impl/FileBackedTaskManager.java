@@ -124,17 +124,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 manager.updateEpicStatus(epic.getId());
                 manager.updateEpicTime(epic.getId());
             }
-            // Восстановление prioritizedTasks
-            for (Task task : manager.tasks.values()) {
-                if (task.getStartTime() != null) {
-                    manager.prioritizedTasks.add(task);
-                }
-            }
-            for (Subtask subtask : manager.subtasks.values()) {
-                if (subtask.getStartTime() != null) {
-                    manager.prioritizedTasks.add(subtask);
-                }
-            }
             manager.idCounter = maxIdCounterInFile;
         } catch (IOException e) {
             throw new ManagerSaveException("Ошибка загрузки", e);

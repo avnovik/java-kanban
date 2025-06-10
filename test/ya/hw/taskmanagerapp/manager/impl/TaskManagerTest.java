@@ -204,7 +204,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    @DisplayName("При удалении эпика подзадачи не удаляются из сортированного списка")
+    @DisplayName("При удалении эпика подзадачи удаляются из сортированного списка")
     void deleteEpic_removesSubtasksFromPrioritized() {
         Epic epic = new Epic(1, "Epic", "Desc");
         int epicId = taskManager.createEpic(epic);
@@ -216,8 +216,8 @@ public abstract class TaskManagerTest<T extends TaskManager> {
                 "Подзадача должна добавиться в prioritizedTasks");
 
         taskManager.deleteEpic(epicId);
-        assertEquals(1, taskManager.getPrioritizedTasks().size(),
-                "После удаления эпика подзадачи остаются в prioritizedTasks (текущая реализация)");
+        assertEquals(0, taskManager.getPrioritizedTasks().size(),
+                "После удаления эпика подзадачи удаляются из prioritizedTasks");
     }
 
     @Test
