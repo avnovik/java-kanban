@@ -168,9 +168,6 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
             manager.createSubtask(newSubtask);
             manager.createSubtask(doneSubtask);
 
-            inProgressEpic.updateTime(List.of(newSubtask, doneSubtask));
-
-
             TaskManager loadedManager = FileBackedTaskManager.loadFromFile(tmpFile.toPath());
 
             Task loadedTask = loadedManager.getTask(1);

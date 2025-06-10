@@ -93,10 +93,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 if (task != null) {
                     if (task.getType() == TaskType.TASK) {
                         manager.tasks.put(task.getId(), task);
+                        if (task.getStartTime() != null) {
+                            manager.prioritizedTasks.add(task);
+                        }
                     } else if (task.getType() == TaskType.EPIC) {
                         manager.epics.put(task.getId(), (Epic) task);
                     } else if (task.getType() == TaskType.SUBTASK) {
                         manager.subtasks.put(task.getId(), (Subtask) task);
+                        if (task.getStartTime() != null) {
+                            manager.prioritizedTasks.add(task);
+                        }
                     }
                     if (task.getId() > maxIdCounterInFile) {
                         maxIdCounterInFile = task.getId();
@@ -113,12 +119,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     }
                 }
             }
-            // Пересчитываем время для всех эпиков
+            // Обновление времени и статуса эпиков
             for (Epic epic : manager.epics.values()) {
-                List<Subtask> subtasks = manager.getSubtasksByEpicId(epic.getId());
-                epic.updateTime(subtasks);
+                manager.updateEpicStatus(epic.getId());
+                manager.updateEpicTime(epic.getId());
             }
-
+            // Восстановление prioritizedTasks
             for (Task task : manager.tasks.values()) {
                 if (task.getStartTime() != null) {
                     manager.prioritizedTasks.add(task);
