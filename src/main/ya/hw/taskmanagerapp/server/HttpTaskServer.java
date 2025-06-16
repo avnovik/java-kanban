@@ -8,13 +8,11 @@ import ya.hw.taskmanagerapp.manager.TaskManager;
 import ya.hw.taskmanagerapp.server.handler.*;
 import ya.hw.taskmanagerapp.server.util.DurationAdapter;
 import ya.hw.taskmanagerapp.server.util.LocalDateTimeAdapter;
-import ya.hw.taskmanagerapp.task.Task;
-import ya.hw.taskmanagerapp.task.TaskStatus;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.time.LocalDateTime;
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class HttpTaskServer {
     private static final int PORT = 8080;
