@@ -43,7 +43,7 @@ public class TasksHandler extends BaseHttpHandler {
                 sendNotFound(exchange);
             }
         } catch (Exception e) {
-            sendText(exchange, "{\"error\": \"Internal Server Error\"}", 500);
+            sendText(exchange, "{\"error\":\"Internal Server Error\"}", 500);
         }
     }
 

@@ -5,8 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpServer;
 import ya.hw.taskmanagerapp.manager.Managers;
 import ya.hw.taskmanagerapp.manager.TaskManager;
-import ya.hw.taskmanagerapp.server.handler.EpicsHandler;
-import ya.hw.taskmanagerapp.server.handler.TasksHandler;
+import ya.hw.taskmanagerapp.server.handler.*;
 import ya.hw.taskmanagerapp.server.util.DurationAdapter;
 import ya.hw.taskmanagerapp.server.util.LocalDateTimeAdapter;
 import ya.hw.taskmanagerapp.task.Task;
@@ -39,7 +38,9 @@ public class HttpTaskServer {
     private void registerHandlers() {
         httpServer.createContext("/tasks", new TasksHandler(manager));
         httpServer.createContext("/epics", new EpicsHandler(manager));
-
+        httpServer.createContext("/subtasks", new SubtasksHandler(manager));
+        httpServer.createContext("/history", new HistoryHandler(manager));
+        httpServer.createContext("/prioritized", new PrioritizedHandler(manager));
     }
 
     public void start() {
@@ -49,15 +50,12 @@ public class HttpTaskServer {
 
     public void stop() {
         httpServer.stop(0);
-        System.out.println("HTTP-сервер остановлен");
+        System.out.println("HTTP-сервер остановлен\n");
     }
 
     public static void main(String[] args) throws IOException {
         HttpTaskServer server = new HttpTaskServer();
         server.start();
-
-        Task task = new Task(1, "Test", "Description", TaskStatus.NEW,
-                LocalDateTime.now(), Duration.ofMinutes(30));
 
     }
 }
