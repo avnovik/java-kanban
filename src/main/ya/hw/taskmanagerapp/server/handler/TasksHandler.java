@@ -23,22 +23,15 @@ public class TasksHandler extends BaseHttpHandler {
             String method = exchange.getRequestMethod();
             String path = exchange.getRequestURI().getPath();
 
-            // Обработка GET /tasks
             if ("GET".equals(method) && path.equals("/tasks")) {
                 System.out.println("GET + /tasks");
-                handleGetAllTasks(exchange);
-            }
-            // Обработка GET /tasks/{id}
-            else if ("GET".equals(method) && path.matches("/tasks/\\d+")) {
-                handleGetTaskById(exchange);
-            }
-            // Обработка POST /tasks
-            else if ("POST".equals(method) && path.equals("/tasks")) {
-                handleCreateOrUpdateTask(exchange);
-            }
-            // Обработка DELETE /tasks/{id}
-            else if ("DELETE".equals(method) && path.matches("/tasks/\\d+")) {
-                handleDeleteTask(exchange);
+                handleGetAllTasks(exchange); // Обработка GET /tasks
+            } else if ("GET".equals(method) && path.matches("/tasks/\\d+")) {
+                handleGetTaskById(exchange); // Обработка GET /tasks/{id}
+            } else if ("POST".equals(method) && path.equals("/tasks")) {
+                handleCreateOrUpdateTask(exchange); // Обработка POST /tasks
+            } else if ("DELETE".equals(method) && path.matches("/tasks/\\d+")) {
+                handleDeleteTask(exchange); // Обработка DELETE /tasks/{id}
             } else {
                 sendNotFound(exchange);
             }

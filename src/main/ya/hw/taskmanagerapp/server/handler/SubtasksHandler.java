@@ -23,21 +23,14 @@ public class SubtasksHandler extends BaseHttpHandler {
             String method = exchange.getRequestMethod();
             String path = exchange.getRequestURI().getPath();
 
-            // Обработка GET /subtasks
             if ("GET".equals(method) && path.equals("/subtasks")) {
-                handleGetAllSubtasks(exchange);
-            }
-            // Обработка GET /subtasks/{id}
-            else if ("GET".equals(method) && path.matches("/subtasks/\\d+")) {
-                handleGetSubtaskById(exchange);
-            }
-            // Обработка POST /subtasks
-            else if ("POST".equals(method) && path.equals("/subtasks")) {
-                handleCreateOrUpdateSubtask(exchange);
-            }
-            // Обработка DELETE /subtasks/{id}
-            else if ("DELETE".equals(method) && path.matches("/subtasks/\\d+")) {
-                handleDeleteSubtask(exchange);
+                handleGetAllSubtasks(exchange); // Обработка GET /subtasks
+            } else if ("GET".equals(method) && path.matches("/subtasks/\\d+")) {
+                handleGetSubtaskById(exchange); // Обработка GET /subtasks/{id}
+            } else if ("POST".equals(method) && path.equals("/subtasks")) {
+                handleCreateOrUpdateSubtask(exchange); // Обработка POST /subtasks
+            } else if ("DELETE".equals(method) && path.matches("/subtasks/\\d+")) {
+                handleDeleteSubtask(exchange); // Обработка DELETE /subtasks/{id}
             } else {
                 sendNotFound(exchange);
             }

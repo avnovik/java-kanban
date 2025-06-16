@@ -22,25 +22,17 @@ public class EpicsHandler extends BaseHttpHandler {
         try {
             String method = exchange.getRequestMethod();
             String path = exchange.getRequestURI().getPath();
-            // Обработка GET /epics
+
             if ("GET".equals(method) && path.equals("/epics")) {
-                handleGetAllEpics(exchange);
-            }
-            // Обработка GET /epics/{id}
-            else if ("GET".equals(method) && path.matches("/epics/\\d+")) {
-                handleGetEpicById(exchange);
-            }
-            // Обработка GET /epics/{id}/subtasks
-            else if ("GET".equals(method) && path.matches("/epics/\\d+/subtasks")) {
-                handleGetEpicSubtasks(exchange);
-            }
-            // Обработка POST /epics
-            else if ("POST".equals(method) && path.equals("/epics")) {
-                handleCreateEpic(exchange);
-            }
-            // Обработка DELETE /epics/{id}
-            else if ("DELETE".equals(method) && path.matches("/epics/\\d+")) {
-                handleDeleteEpic(exchange);
+                handleGetAllEpics(exchange); // Обработка GET /epics
+            } else if ("GET".equals(method) && path.matches("/epics/\\d+")) {
+                handleGetEpicById(exchange); // Обработка GET /epics/{id}
+            } else if ("GET".equals(method) && path.matches("/epics/\\d+/subtasks")) {
+                handleGetEpicSubtasks(exchange); // Обработка GET /epics/{id}/subtasks
+            } else if ("POST".equals(method) && path.equals("/epics")) {
+                handleCreateEpic(exchange); // Обработка POST /epics
+            } else if ("DELETE".equals(method) && path.matches("/epics/\\d+")) {
+                handleDeleteEpic(exchange); // Обработка DELETE /epics/{id}
             } else {
                 sendNotFound(exchange);
             }
