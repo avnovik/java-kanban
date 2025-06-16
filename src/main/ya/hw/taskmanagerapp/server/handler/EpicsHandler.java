@@ -2,16 +2,13 @@ package ya.hw.taskmanagerapp.server.handler;
 
 import com.sun.net.httpserver.HttpExchange;
 import ya.hw.taskmanagerapp.manager.TaskManager;
-import ya.hw.taskmanagerapp.server.util.BaseHttpHandler;
 import ya.hw.taskmanagerapp.task.Epic;
 import ya.hw.taskmanagerapp.task.Subtask;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class EpicsHandler extends BaseHttpHandler {
-    private final TaskManager manager;
 
     public EpicsHandler(TaskManager manager) {
         this.manager = manager;
@@ -37,7 +34,6 @@ public class EpicsHandler extends BaseHttpHandler {
                 sendNotFound(exchange);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             sendText(exchange, "{\"error\":\"Internal Server Error\"}", 500);
         }
     }
@@ -68,7 +64,9 @@ public class EpicsHandler extends BaseHttpHandler {
     }
 
     private void handleCreateEpic(HttpExchange exchange) throws IOException {
-        String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+        String requestBody = parseJsonBody(exchange);
+        if (requestBody == null) return;
+
         Epic epic = gson.fromJson(requestBody, Epic.class);
         int id = manager.createEpic(epic);
         sendText(exchange, "{\"id\":" + id + "}", 201);

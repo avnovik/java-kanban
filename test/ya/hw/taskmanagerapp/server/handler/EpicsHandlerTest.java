@@ -115,6 +115,14 @@ public class EpicsHandlerTest extends HandlerBaseTest {
     }
 
     @Test
+    @DisplayName("POST /epics - 400 при пустом теле")
+    void postEpic_EmptyBody_Returns400() throws Exception {
+        HttpResponse<String> response = sendPost("/epics", "");
+        assertResponseCode(response, 400);
+        assertEquals("{\"error\":\"Request body is empty\"}", response.body());
+    }
+
+    @Test
     @DisplayName("DELETE /epics/{id} - удаление эпика")
     void deleteEpic_ShouldReturn200() throws Exception {
         Epic epic = new Epic(0, "Test Epic", "Desc");

@@ -1,27 +1,17 @@
 package ya.hw.taskmanagerapp.server;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpServer;
 import ya.hw.taskmanagerapp.manager.Managers;
 import ya.hw.taskmanagerapp.manager.TaskManager;
 import ya.hw.taskmanagerapp.server.handler.*;
-import ya.hw.taskmanagerapp.server.util.DurationAdapter;
-import ya.hw.taskmanagerapp.server.util.LocalDateTimeAdapter;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 public class HttpTaskServer {
     private static final int PORT = 8080;
     private final HttpServer httpServer;
     private final TaskManager manager;
-    private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-            .registerTypeAdapter(Duration.class, new DurationAdapter())
-            .create();
 
     public HttpTaskServer() throws IOException {
         this.manager = Managers.getDefault();

@@ -3,15 +3,12 @@ package ya.hw.taskmanagerapp.server.handler;
 import com.sun.net.httpserver.HttpExchange;
 import ya.hw.taskmanagerapp.manager.TaskManager;
 import ya.hw.taskmanagerapp.manager.exception.ManagerValidateException;
-import ya.hw.taskmanagerapp.server.util.BaseHttpHandler;
 import ya.hw.taskmanagerapp.task.Subtask;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class SubtasksHandler extends BaseHttpHandler {
-    private final TaskManager manager;
 
     public SubtasksHandler(TaskManager manager) {
         this.manager = manager;
@@ -55,7 +52,9 @@ public class SubtasksHandler extends BaseHttpHandler {
     }
 
     private void handleCreateOrUpdateSubtask(HttpExchange exchange) throws IOException {
-        String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+        String requestBody = parseJsonBody(exchange);
+        if (requestBody == null) return;
+
         Subtask subtask = gson.fromJson(requestBody, Subtask.class);
         try {
             if (subtask.getId() == 0) {

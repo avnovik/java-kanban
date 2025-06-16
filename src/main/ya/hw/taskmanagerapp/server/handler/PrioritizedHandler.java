@@ -2,14 +2,12 @@ package ya.hw.taskmanagerapp.server.handler;
 
 import com.sun.net.httpserver.HttpExchange;
 import ya.hw.taskmanagerapp.manager.TaskManager;
-import ya.hw.taskmanagerapp.server.util.BaseHttpHandler;
 import ya.hw.taskmanagerapp.task.Task;
 
 import java.io.IOException;
 import java.util.Set;
 
 public class PrioritizedHandler extends BaseHttpHandler {
-    private final TaskManager manager;
 
     public PrioritizedHandler(TaskManager manager) {
         this.manager = manager;

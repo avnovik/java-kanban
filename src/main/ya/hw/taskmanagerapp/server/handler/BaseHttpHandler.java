@@ -1,9 +1,12 @@
-package ya.hw.taskmanagerapp.server.util;
+package ya.hw.taskmanagerapp.server.handler;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import ya.hw.taskmanagerapp.manager.TaskManager;
+import ya.hw.taskmanagerapp.server.adapter.DurationAdapter;
+import ya.hw.taskmanagerapp.server.adapter.LocalDateTimeAdapter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,6 +15,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public abstract class BaseHttpHandler implements HttpHandler {
+
+    protected TaskManager manager;
 
     protected final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
@@ -55,5 +60,20 @@ public abstract class BaseHttpHandler implements HttpHandler {
 
     protected void sendNotFound(HttpExchange exchange) throws IOException {
         sendText(exchange, "{\"error\":\"Not Found\"}", 404);
+    }
+
+    protected void bodyIsEmpty(HttpExchange exchange) throws IOException {
+        sendText(exchange, "{\"error\":\"Request body is empty\"}", 400);
+    }
+
+    protected String parseJsonBody(HttpExchange exchange) throws IOException {
+        String requestBody = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+
+        if (requestBody.isBlank()) {
+            bodyIsEmpty(exchange);
+            return null;
+        }
+
+        return requestBody;
     }
 }

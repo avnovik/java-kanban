@@ -101,6 +101,14 @@ public class TasksHandlerTest extends HandlerBaseTest {
     }
 
     @Test
+    @DisplayName("POST /tasks - 400 при пустом теле запроса")
+    void createTask_ShouldReturn400_WhenBodyEmpty() throws Exception {
+        HttpResponse<String> response = sendPost("/tasks", "");
+        assertResponseCode(response, 400);
+        assertEquals("{\"error\":\"Request body is empty\"}", response.body());
+    }
+
+    @Test
     @DisplayName("GET /tasks - получение списка задач (пустой список)")
     void getAllTasks_ShouldReturnEmptyList() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()

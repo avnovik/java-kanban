@@ -100,6 +100,14 @@ public class SubtasksHandlerTest extends HandlerBaseTest {
     }
 
     @Test
+    @DisplayName("POST /subtasks - 400 при пустом теле")
+    void postEpic_EmptyBody_Returns400() throws Exception {
+        HttpResponse<String> response = sendPost("/subtasks", "");
+        assertResponseCode(response, 400);
+        assertEquals("{\"error\":\"Request body is empty\"}", response.body());
+    }
+
+    @Test
     @DisplayName("DELETE /subtasks/{id} - удаление подзадачи")
     void deleteSubtask_ShouldReturn200() throws Exception {
         int epicId = createTestEpic("Epic", "Desc");
